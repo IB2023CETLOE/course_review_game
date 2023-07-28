@@ -2,6 +2,7 @@ const questionContainer = document.getElementById('question');
 const answerButtons = document.getElementById('answer-buttons');
 const resultDiv = document.getElementById('result');
 const nextButton = document.getElementById('next');
+const feedbackDiv = document.createElement('div');
 
 let shuffledQuestions, currentQuestionIndex, score;
 
@@ -65,6 +66,8 @@ function showQuestion(question) {
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
+        button.dataset.points = answer.points;
+        button.dataset.feedback = answer.feedback;
         button.addEventListener('click', selectAnswer);
         answerButtons.appendChild(button);
     });
@@ -75,32 +78,24 @@ function resetState() {
     while (answerButtons.firstChild) {
         answerButtons.removeChild(answerButtons.firstChild);
     }
+    if (feedbackDiv.parentNode) {
+        feedbackDiv.parentNode.removeChild(feedbackDiv);
+    }
 }
 
 function selectAnswer(e) {
     const selectedButton = e.target;
-    const correct = selectedButton.dataset.correct;
-    if (correct) score++;
+    const points = Number(selectedButton.dataset.points);
+    const feedback = selectedButton.dataset.feedback;
+    score += points;
+    feedbackDiv.innerText = feedback;
+    questionContainer.appendChild(feedbackDiv);
     Array.from(answerButtons.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct);
+        button.disabled = true;
     });
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide');
     } else {
         resultDiv.innerText = `Quiz ended. Your score: ${score}`;
     }
-}
-
-function setStatusClass(element, correct) {
-    clearStatusClass(element);
-    if (correct) {
-        element.classList.add('correct');
-    } else {
-        element.classList.add('wrong');
-    }
-}
-
-function clearStatusClass(element) {
-    element.classList.remove('correct');
-    element.classList.remove('wrong');
 }
