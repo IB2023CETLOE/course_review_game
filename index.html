@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Course Design Game</title>
+    <title>Quiz</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <h1>Course Design Game</h1>
-        <p id="question"></p>
-        <div class="options">
-            <button id="option1" class="option-btn"></button>
-            <button id="option2" class="option-btn"></button>
-            <button id="option3" class="option-btn"></button>
+    <div id="quiz-container">
+        <h1 id="question">Question will go here</h1>
+        <div id="answer-buttons" class="btn-grid">
+            <!-- Answer buttons will go here -->
         </div>
-        <p id="feedback"></p>
-        <button id="next" class="next-btn">Next</button>
     </div>
-    <script src="game.js"></script>
+    <div id="result"></div>
+    <button id="next">Next</button>
+    <script src="script.js"></script>
 </body>
 </html>
